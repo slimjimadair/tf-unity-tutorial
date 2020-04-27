@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 30
   secondsUntilDestroyed: 2
+  damage: 1
 --- !u!54 &3370674541339686404
 Rigidbody:
   m_ObjectHideFlags: 0

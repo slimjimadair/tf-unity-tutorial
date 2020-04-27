@@ -2,38 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof (Rigidbody))]
 public class EnemyBehaviour : MonoBehaviour
 {
     // Enemy variables
     public float enemySpeed;
-    public GameObject player;
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
         // Set Enemy velocity directed towards the Player
-        Rigidbody ourRigidBody = GetComponent<Rigidbody>();
-        Vector3 vectorToPlayer = player.transform.position - transform.position;
-        ourRigidBody.velocity = vectorToPlayer.normalized * enemySpeed;
-    }
-
-    // OnCollisionEnter is called when a collision occurs
-    private void OnCollisionEnter(Collision thisCollision)
-    {
-        // Get collision object
-        GameObject theirGameObject = thisCollision.gameObject;
-
-        // Handle enemy being hit by bullet
-        if (theirGameObject.GetComponent<BulletBehaviour>() != null) // Check if colliding object is a bullet
+        if (player != null)
         {
-            Destroy(theirGameObject); // Destroy bullet
-            Destroy(gameObject); // Destroy enemy
+            Rigidbody ourRigidBody = GetComponent<Rigidbody>();
+            Vector3 vectorToPlayer = player.transform.position - transform.position;
+            ourRigidBody.velocity = vectorToPlayer.normalized * enemySpeed;
         }
     }
+
 }

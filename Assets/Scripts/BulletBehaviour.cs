@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class BulletBehaviour : MonoBehaviour
 {
     // Bullet variables
     public float bulletSpeed;
     public float secondsUntilDestroyed;
+    public float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -30,5 +32,20 @@ public class BulletBehaviour : MonoBehaviour
             }
         }
 
+    }
+
+    // OnCollisionEnter is called when a collision occurs
+    private void OnCollisionEnter(Collision thisCollision)
+    {
+        // Get collision object
+        GameObject theirGameObject = thisCollision.gameObject;
+
+        // Handle enemy being hit by bullet
+        if (theirGameObject.GetComponent<HealthSystem>() != null) // Check if colliding object has health
+        {
+            HealthSystem theirHealthSystem = theirGameObject.GetComponent<HealthSystem>();
+            theirHealthSystem.TakeDamage(damage); // Inflict damage
+            Destroy(gameObject); // Destroy self
+        }
     }
 }
